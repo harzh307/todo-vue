@@ -1,11 +1,16 @@
-<script>
+<script lang="ts">
+interface Todo {
+  id: number;
+  todo: string;
+  isDone: boolean;
+}
 export default {
   data() {
     return {
       id: 0,
       message: "Todo App",
       text: "",
-      todos: [],
+      todos: [] as Todo[],
     };
   },
   methods: {
@@ -56,7 +61,7 @@ export default {
         <input
           class="textInput"
           :value="text"
-          @input="(event) => (text = event.target.value)"
+          @input="(event:EventTarget) => (text = event.target.value)"
         />
         <button class="submitBtn" type="submit" @click.exact="onClick">submit</button>
       </form>
