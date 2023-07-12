@@ -14,9 +14,9 @@ export default {
     };
   },
   methods: {
-    onClick(e) {
+    onClick(e: any) {
       e.preventDefault();
-      const truncate = (str, len) => {
+      const truncate = (str: string, len: number) => {
         if (str.length > len) {
           if (len <= 3) {
             return str.slice(0, len - 3) + "...";
@@ -39,7 +39,7 @@ export default {
       }
       alert("invalid input");
     },
-    onUpdate(index, todo) {
+    onUpdate(index: number, todo: any) {
       console.log({ index });
       this.todos = [
         ...this.todos.slice(0, index),
@@ -47,7 +47,7 @@ export default {
         ...this.todos.slice(index + 1),
       ];
     },
-    onDelete(id) {
+    onDelete(id: number | string) {
       this.todos = this.todos.filter((item) => item.id !== id);
     },
   },
@@ -61,20 +61,27 @@ export default {
         <input
           class="textInput"
           :value="text"
-          @input="(event:EventTarget) => (text = event.target.value)"
+          @input="(event:any) => (text = event?.target?.value)"
         />
         <button class="submitBtn" type="submit" @click.exact="onClick">submit</button>
       </form>
-      <div class="todoList" v-for="(item, index) in todos" :key="item.id">
-        <li :class="{ todoText: !item.isDone, todoIsDone: item.isDone }">
-          {{ item.id }}: {{ item.todo }}
-        </li>
-        <button class="doneButton" type="button" @click.exact="onUpdate(index, item)">
-          {{ item.isDone ? "Undo" : "Done" }}
-        </button>
-        <button class="deleteBtn" type="button" @click.exact="onDelete(item.id)">
-          Delete
-        </button>
+      <div class="todoList">
+        <div v-for="(item, index) in todos" :key="item.id">
+          <ul :class="{ todoText: !item.isDone, todoIsDone: item.isDone }">
+            {{
+              item.id
+            }}:
+            {{
+              item.todo
+            }}
+          </ul>
+          <button class="doneButton" type="button" @click.exact="onUpdate(index, item)">
+            {{ item.isDone ? "Undo" : "Done" }}
+          </button>
+          <button class="deleteBtn" type="button" @click.exact="onDelete(item.id)">
+            Delete
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -151,6 +158,7 @@ export default {
   font-weight: 700;
 }
 .todoText {
+  color: #333;
   display: flex;
   border-radius: 8px;
   flex: 1;
@@ -160,6 +168,7 @@ export default {
   /* text-decoration: elipses; */
 }
 .todoIsDone {
+  color: #333;
   border-radius: 8px;
   background-color: #f8cba6;
   padding: 3px 10px;
